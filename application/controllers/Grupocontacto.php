@@ -10,37 +10,22 @@ class Grupocontacto extends CI_Controller
         parent::__construct();
         $this->load->model('Grupocontacto_model');
         $this->load->library('form_validation');
+	    $this->load->library('datatables');
+
+        //$this->load->helper('url');
+        //$this->load->library('session',);
     }
 
     public function index()
     {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->input->get('start'));
+        $this->load->view('header');
+        $this->load->view('grupocontacto/grupocontacto_list');
+        $this->load->view('footer');
+    }
 
-        if ($q <> '') {
-            $config['base_url'] = base_url() . 'grupocontacto/index.html?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'grupocontacto/index.html?q=' . urlencode($q);
-        } else {
-            $config['base_url'] = base_url() . 'grupocontacto/index.html';
-            $config['first_url'] = base_url() . 'grupocontacto/index.html';
-        }
-
-        $config['per_page'] = 10;
-        $config['page_query_string'] = TRUE;
-        $config['total_rows'] = $this->Grupocontacto_model->total_rows($q);
-        $grupocontacto = $this->Grupocontacto_model->get_limit_data($config['per_page'], $start, $q);
-
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
-
-        $data = array(
-            'grupocontacto_data' => $grupocontacto,
-            'q' => $q,
-            'pagination' => $this->pagination->create_links(),
-            'total_rows' => $config['total_rows'],
-            'start' => $start,
-        );
-        $this->load->view('grupocontacto/grupocontacto_list', $data);
+    public function json() {
+        header('Content-Type: application/json');
+        echo $this->Grupocontacto_model->json();
     }
 
     public function read($id)
@@ -52,7 +37,9 @@ class Grupocontacto extends CI_Controller
 		'NombreGrupo' => $row->NombreGrupo,
 		'Descripcion' => $row->Descripcion,
 	    );
+            $this->load->view('header');
             $this->load->view('grupocontacto/grupocontacto_read', $data);
+            $this->load->view('footer');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('grupocontacto'));
@@ -68,7 +55,10 @@ class Grupocontacto extends CI_Controller
 	    'NombreGrupo' => set_value('NombreGrupo'),
 	    'Descripcion' => set_value('Descripcion'),
 	);
+        $this->load->view('header');
         $this->load->view('grupocontacto/grupocontacto_form', $data);
+        $this->load->view('footer');
+
     }
 
     public function create_action()
@@ -101,7 +91,9 @@ class Grupocontacto extends CI_Controller
 		'NombreGrupo' => set_value('NombreGrupo', $row->NombreGrupo),
 		'Descripcion' => set_value('Descripcion', $row->Descripcion),
 	    );
+            $this->load->view('header');
             $this->load->view('grupocontacto/grupocontacto_form', $data);
+            $this->load->view('footer');
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('grupocontacto'));

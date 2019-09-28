@@ -15,6 +15,16 @@ class Contactos_model extends CI_Model
         parent::__construct();
     }
 
+    // datatables
+    function json() {
+        $this->datatables->select('IdContacto,Nombre,TelefonoFijo,Celular,Direccion,Email,FechaNacimiento,Foto,IdGrupo');
+        $this->datatables->from('contactos');
+        //add this line for join
+        //$this->datatables->join('table2', 'contactos.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('contactos/read/$1'),'Read')." | ".anchor(site_url('contactos/update/$1'),'Update')." | ".anchor(site_url('contactos/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'IdContacto');
+        return $this->datatables->generate();
+    }
+
     // get all
     function get_all()
     {
