@@ -73,16 +73,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="<?=site_url('welcome')?>">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Grupos</a>
+        <a class="nav-link" href="<?=site_url('welcome/grupos')?>">Grupos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Contactos</a>
+        <a class="nav-link" href="<?=site_url('welcome/contactos')?>">Contactos</a>
       </li>
-
-
       <!--
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
