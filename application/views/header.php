@@ -8,7 +8,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    <link rel="stylesheet" href="<?=base_url()?>assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?=base_url()?>assets/bootstrap/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-
 	<style type="text/css">
 	body {
 		background-color: #fff;
@@ -25,11 +24,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		margin: 0 0 14px 0;
 
 	}
+    footer {
+      margin-top:  25px;
+      background-color: black;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+      height: 40px;
+      color: white;
+    }
 
 	</style>
 </head>
 <body>
-<div class="container">
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <!-- Brand -->
   <a class="navbar-brand" href="#">

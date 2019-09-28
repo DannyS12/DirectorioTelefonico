@@ -1,87 +1,79 @@
-        <div class="row" style="margin-bottom: 10px">
-            <div class="col-md-4">
-                <h2 style="margin-top:0px">Contactos List</h2>
-            </div>
-            <div class="col-md-4 text-center">
-                <div style="margin-top: 4px"  id="message">
-                    <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
-                </div>
-            </div>
-            <div class="col-md-4 text-right">
-                <?php echo anchor(site_url('contactos/create'), 'Create', 'class="btn btn-primary"'); ?>
-	    </div>
+<h2 style="margin-top:0px">Contactos</h2>
+<div class="row" style="margin-bottom: 10px">
+    <div class="col-md-4">
+        <?php echo anchor(site_url('contactos/create'),'Nuevo', 'class="btn btn-primary"'); ?>
+    </div>
+    <div class="col-md-4 text-center">
+        <div style="margin-top: 8px" id="message">
+            <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
         </div>
-        <table class="table table-bordered table-striped" id="mytable">
-            <thead>
-                <tr>
-                    <th width="80px">No</th>
-		    <th>Nombre</th>
-		    <th>TelefonoFijo</th>
-		    <th>Celular</th>
-		    <th>Direccion</th>
-		    <th>Email</th>
-		    <th>FechaNacimiento</th>
-		    <th>Foto</th>
-		    <th>IdGrupo</th>
-		    <th width="200px">Action</th>
-                </tr>
-            </thead>
-
-        </table>
-        <script src="<?php echo base_url('assets/js/jquery-1.11.2.min.js') ?>"></script>
-        <script src="<?php echo base_url('assets/datatables/jquery.dataTables.js') ?>"></script>
-        <script src="<?php echo base_url('assets/datatables/dataTables.bootstrap.js') ?>"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
-                {
-                    return {
-                        "iStart": oSettings._iDisplayStart,
-                        "iEnd": oSettings.fnDisplayEnd(),
-                        "iLength": oSettings._iDisplayLength,
-                        "iTotal": oSettings.fnRecordsTotal(),
-                        "iFilteredTotal": oSettings.fnRecordsDisplay(),
-                        "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-                        "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-                    };
-                };
-
-                var t = $("#mytable").dataTable({
-                    initComplete: function() {
-                        var api = this.api();
-                        $('#mytable_filter input')
-                                .off('.DT')
-                                .on('keyup.DT', function(e) {
-                                    if (e.keyCode == 13) {
-                                        api.search(this.value).draw();
-                            }
-                        });
-                    },
-                    oLanguage: {
-                        sProcessing: "loading..."
-                    },
-                    processing: true,
-                    serverSide: true,
-                    ajax: {"url": "contactos/json", "type": "POST"},
-                    columns: [
+    </div>
+    <div class="col-md-1 text-right">
+    </div>
+    <div class="col-md-3 text-right">
+        <form action="<?php echo site_url('contactos/index'); ?>" class="form-inline" method="get">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q" value="<?php echo $q; ?>">
+                <span class="input-group-btn">
+                    <?php
+                        if ($q <> '')
                         {
-                            "data": "IdContacto",
-                            "orderable": false
-                        },{"data": "Nombre"},{"data": "TelefonoFijo"},{"data": "Celular"},{"data": "Direccion"},{"data": "Email"},{"data": "FechaNacimiento"},{"data": "Foto"},{"data": "IdGrupo"},
-                        {
-                            "data" : "action",
-                            "orderable": false,
-                            "className" : "text-center"
+                            ?>
+                            <a href="<?php echo site_url('contactos'); ?>" class="btn btn-default">Restaurar</a>
+                            <?php
                         }
-                    ],
-                    order: [[0, 'desc']],
-                    rowCallback: function(row, data, iDisplayIndex) {
-                        var info = this.fnPagingInfo();
-                        var page = info.iPage;
-                        var length = info.iLength;
-                        var index = page * length + (iDisplayIndex + 1);
-                        $('td:eq(0)', row).html(index);
-                    }
-                });
-            });
-        </script>
+                    ?>
+                  <button class="btn btn-primary" type="submit">Buscar</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<table class="table table-bordered" style="margin-bottom: 10px">
+    <tr>
+        <th>No</th>
+<th>Nombre</th>
+<th>TelefonoFijo</th>
+<th>Celular</th>
+<th>Direccion</th>
+<th>Email</th>
+<th>FechaNacimiento</th>
+<th>Foto</th>
+<th>IdGrupo</th>
+<th>Action</th>
+    </tr><?php
+    foreach ($contactos_data as $contactos)
+    {
+        ?>
+        <tr>
+    <td width="80px"><?php echo ++$start ?></td>
+    <td><?php echo $contactos->Nombre ?></td>
+    <td><?php echo $contactos->TelefonoFijo ?></td>
+    <td><?php echo $contactos->Celular ?></td>
+    <td><?php echo $contactos->Direccion ?></td>
+    <td><?php echo $contactos->Email ?></td>
+    <td><?php echo $contactos->FechaNacimiento ?></td>
+    <td><?php echo $contactos->Foto ?></td>
+    <td><?php echo $contactos->IdGrupo ?></td>
+    <td style="text-align:center" width="200px">
+        <?php
+        echo anchor(site_url('contactos/read/'.$contactos->IdContacto),'Detalles');
+        echo ' | ';
+        echo anchor(site_url('contactos/update/'.$contactos->IdContacto),'Actualizar');
+        echo ' | ';
+        echo anchor(site_url('contactos/delete/'.$contactos->IdContacto),'Eliminar','onclick="javasciprt: return confirm(\'Está seguro ?\')"');
+        ?>
+    </td>
+</tr>
+        <?php
+    }
+    ?>
+</table>
+<div class="row">
+    <div class="col-md-6">
+        <a href="#" class="btn btn-primary">Total de Registros : <?php echo $total_rows ?></a>
+</div>
+    <div class="col-md-6 text-right">
+        <?php echo $pagination ?>
+    </div>
+</div>

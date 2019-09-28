@@ -15,16 +15,6 @@ class Grupocontacto_model extends CI_Model
         parent::__construct();
     }
 
-    // datatables
-    function json() {
-        $this->datatables->select('IdGrupo,NombreGrupo,Descripcion');
-        $this->datatables->from('grupocontacto');
-        //add this line for join
-        //$this->datatables->join('table2', 'grupocontacto.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('grupocontacto/read/$1'),'Read')." | ".anchor(site_url('grupocontacto/update/$1'),'Update')." | ".anchor(site_url('grupocontacto/delete/$1'),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'IdGrupo');
-        return $this->datatables->generate();
-    }
-
     // get all
     function get_all()
     {
