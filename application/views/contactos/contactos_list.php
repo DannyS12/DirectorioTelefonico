@@ -39,7 +39,7 @@
 <th>Email</th>
 <th>FechaNacimiento</th>
 <th>Foto</th>
-<th>IdGrupo</th>
+<th>Grupo</th>
 <th>Action</th>
     </tr><?php
     foreach ($contactos_data as $contactos)
@@ -54,7 +54,7 @@
     <td><?php echo $contactos->Email ?></td>
     <td><?php echo $contactos->FechaNacimiento ?></td>
     <td><?php echo $contactos->Foto ?></td>
-    <td><?php echo $contactos->IdGrupo ?></td>
+    <td><?php echo $contactos->NombreGrupo ?></td>
     <td style="text-align:center" width="200px">
         <?php
         echo anchor(site_url('contactos/read/'.$contactos->IdContacto),'Detalles');
