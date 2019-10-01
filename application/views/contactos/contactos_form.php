@@ -32,6 +32,18 @@
     <label for="int">IdGrupo <?php echo form_error('IdGrupo') ?></label>
     <input type="text" class="form-control" name="IdGrupo" id="IdGrupo" placeholder="IdGrupo" value="<?php echo $IdGrupo; ?>" />
 </div>
+<div class="form-group">
+    <label for="int">IdGrupo <?php echo form_error('IdGrupo') ?></label>
+    <select id="IdGrupo" name="IdGrupo">
+        <option value="0">Seleccione grupo..</option>
+        <?php
+            foreach ($contactos_data as $grupo)
+            {
+                echo '<option value="'.$grupo->IdGrupo.'">'.$grupo->NombreGrupo.'</option>';
+            }
+        ?>
+    </select>
+</div>
 <input type="hidden" name="IdContacto" value="<?php echo $IdContacto; ?>" />
 <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
 <a href="<?php echo site_url('contactos') ?>" class="btn btn-default">Cancelar</a>

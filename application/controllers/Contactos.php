@@ -69,8 +69,22 @@ class Contactos extends CI_Controller
         }
     }
 
+    public function thegrupos()
+    {
+        $row = $this->Contactos_model->get_grupos();
+        if ($row) {
+            $data = array(
+		'IdGrupo' => $row->IdGrupo,
+		'NombreGrupo' => $row->NombreGrupo,
+	    );
+            $this->load->view('contactos/contactos_form', $data);
+        }
+
+    }
+
     public function create()
     {
+
         $data = array(
             'button' => 'Registrar',
             'action' => site_url('contactos/create_action'),
@@ -87,7 +101,6 @@ class Contactos extends CI_Controller
         $this->load->view('header');
         $this->load->view('contactos/contactos_form', $data);
         $this->load->view('footer');
-
     }
 
     public function create_action()
